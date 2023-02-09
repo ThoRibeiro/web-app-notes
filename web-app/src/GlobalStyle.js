@@ -21,6 +21,6 @@ export const darkTheme = {
 };
 export const lightTheme = {
   mainBackgroundColor : "#d9b99b",
-  asideBackgroundColor : "#CFB997",
-  mainTextColor : "dark",
+  asideBackgroundColor : "#AD8E70",
+  mainTextColor : "white",
 };

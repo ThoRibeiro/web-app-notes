@@ -4,11 +4,11 @@ import { useParams} from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { Form, Title, Content, Enregistrer, SaveStatus, Loader, ErrorMessage } from "./Note.styled";
 import { FullHeightAndWidthCentered } from "../App.styled";
+import { darkTheme } from "../GlobalStyle";
 
 const Note = ({onModif}) => {
   // permet de recupérer l'id
   const {id} = useParams();
-
   const [notes, setNotes] = useState(null);
   const [iconStatus, setIcons] = useState(<VscDebugRestart />)
   const [getStatus, setGetStatus] = useState("IDLE");
@@ -28,9 +28,11 @@ const Note = ({onModif}) => {
   }, [id]);
 
   useEffect(() => {
+    setSaveStatus("IDLE");
     fetchNotes();
   }, [id, fetchNotes]);
 
+  //permet de save la note
   const saveNote = async () => {
     setSaveStatus("LOADING");
     const response = await fetch(`/notes/${notes.id}`, { 

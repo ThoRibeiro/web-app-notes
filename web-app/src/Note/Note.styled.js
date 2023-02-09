@@ -43,7 +43,8 @@ export const Enregistrer = styled.button `
     width: 20%;
     font-weight: bold; 
     border-radius: 10px;
-    background-color: #1d2327;
+    border: 0;
+    background-color:${({ theme }) => theme.asideBackgroundColor};;
     color: ${COLOR_BUTTON};
 `;
 

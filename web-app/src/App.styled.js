@@ -40,7 +40,8 @@ export const AddNotes = styled.button `
   align-items: flex-end;
   margin: auto;
   border-radius: 5px;
-  background-color: #2c3338;
+  background-color: ${({ theme }) => theme.mainBackgroundColor};
+  border: 0;
   color: white;
   
 `;
@@ -66,11 +67,29 @@ export const LoaderWrapper = styled.div`
 
 export const TrashNote = styled.button`
   padding: 10px;
-  margin: 5px;
-  display: flex;
-  align-items: flex-end;
-  margin: auto;
+  border: 0;
   border-radius: 5px;
-  background-color: #2c3338;
+  background-color: ${({ theme }) => theme.asideBackgroundColor};
   color: white;
+  margin: 20px;
+  float: right;
 `;
+
+export const NameProfile = styled.p`
+  font-size: 17px;
+  text-decoration: underline;
+  color: ${({ theme }) => theme.mainTextColor};
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+`;
+
+export const ChangeTheme = styled.button`
+  background-color: ${({ theme }) => theme.mainBackgroundColor};
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  
+`;
+
+

@@ -11,6 +11,6 @@ export const Link = styled(_Link) `
     background-color: ${({ theme }) => theme.asideBackgroundColor};
     
     &:hover{
-        filter: brightness(2.5);
+        background-color: ${({ theme }) => theme.mainBackgroundColor};
     }
 `;

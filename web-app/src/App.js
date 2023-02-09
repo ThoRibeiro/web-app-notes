@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { VscAdd } from "react-icons/vsc";
-import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillTrashFill, BsFillBrightnessHighFill } from "react-icons/bs";
 
 import LinkToNote from './LinkToNote';
 import Note from './Note';
 
 import { NoteList } from './NoteList/NoteList.styled';
-import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, TrashNote } from './App.styled';
+import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, TrashNote, NameProfile, ChangeTheme } from './App.styled';
 import { darkTheme, GlobalStyle, lightTheme } from './GlobalStyle';
 import { Loader } from './Note/Note.styled';
 
@@ -16,6 +16,8 @@ function App() {
   const [id, setId] = useState();
   const [notes, setNotes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState("");
+  const [theme, setTheme] = useState("light");
   
   const fetchNotes = async () => {
     const response = await fetch ("/notes");
@@ -24,6 +26,13 @@ function App() {
     setNotes(notes);
   }
 
+  //afficher profile
+  const putProfile = async () => {
+    const response = await fetch(`/profile`);
+    const data = await response.json();
+    setProfile(data.name);
+  };
+  
   //create note 
   const createNote = async () => {
     const response = await fetch(`/notes/`, { 
@@ -40,6 +49,14 @@ function App() {
       });
   };
 
+  //bouton mode light/dark
+  const toggleTheme = () => {
+    if (theme === 'lightTheme') {
+      setTheme('darkTheme');
+    } else {
+      setTheme('lightTheme');
+    }
+  };
   // delete une note
   const removeNote = async () => {
     console.log(id);
@@ -58,21 +75,21 @@ function App() {
   }
   useEffect(() => {
     fetchNotes();
+    putProfile(); 
   }, []);
 
   return (
     <>
-    <ThemeProvider theme={darkTheme}>
+    
+    <ThemeProvider theme={theme==="light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       
       <Side>
+        <NameProfile>Bonjour {profile} !</NameProfile>
         {isLoading && (
           <Loader/>
         )}
         <GroupeTitleSide>
-        <TrashNote onClick={() => 
-        {removeNote(id)}}><BsFillTrashFill/></TrashNote>
-        
           <AddNotes path='/' onClick={createNote}><VscAdd /></AddNotes>
           <TitleList>Liste des notes :</TitleList>
         </GroupeTitleSide>
@@ -88,14 +105,19 @@ function App() {
         ? <Loader/>
         : "Aucune note..."
         } 
+        <ChangeTheme onClick={toggleTheme}><BsFillBrightnessHighFill/></ChangeTheme>
       </Side>
       <Main>
+        <TrashNote onClick={() => 
+          {removeNote(id)}}><BsFillTrashFill/>
+        </TrashNote>
         <Routes>
           <Route path='/' element={<MessageNoteNotSelect>Il faut sélectionner votre note !</MessageNoteNotSelect>}></Route>
-
           <Route path='/notes/:id' element={<Note onModif={updateNotes}/>}></Route>
         </Routes>
+        
       </Main>
+      
     </ThemeProvider>
   </>
   );
