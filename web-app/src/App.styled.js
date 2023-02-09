@@ -63,3 +63,14 @@ export const FullHeightAndWidthCentered = styled.div`
 export const LoaderWrapper = styled.div`
   height: 60px;
 `;
+
+export const TrashNote = styled.button`
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  align-items: flex-end;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #2c3338;
+  color: white;
+`;

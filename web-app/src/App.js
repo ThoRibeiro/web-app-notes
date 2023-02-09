@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { VscAdd } from "react-icons/vsc";
+import { BsFillTrashFill } from "react-icons/bs";
 
-import { NoteList } from './NoteList/NoteList.styled';
-import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect } from './App.styled';
-import { darkTheme, GlobalStyle } from './GlobalStyle';
 import LinkToNote from './LinkToNote';
 import Note from './Note';
+
+import { NoteList } from './NoteList/NoteList.styled';
+import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, TrashNote } from './App.styled';
+import { darkTheme, GlobalStyle, lightTheme } from './GlobalStyle';
 import { Loader } from './Note/Note.styled';
 
 function App() { 
+  const [id, setId] = useState();
   const [notes, setNotes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -21,6 +24,7 @@ function App() {
     setNotes(notes);
   }
 
+  //create note 
   const createNote = async () => {
     const response = await fetch(`/notes/`, { 
       method : "POST", 
@@ -34,18 +38,20 @@ function App() {
       .then(json => {
         setNotes(notes.concat([json]));
       });
-    if(response.ok){
-      const data = response.json().id;
-      console.log(data);
-      console.log("OK");
-    }
   };
 
-  const createNewNote = (event) => {
-    event.preventDefault();
-    createNote();
-  }
+  // delete une note
+  const removeNote = async () => {
+    console.log(id);
+    fetch(`/notes/${id}`, { 
+      method : "DELETE",})
+      .then (() => {
+        setNotes(notes.filter((notes) => notes.id !== parseInt(id)));
+        
+      });
+  };
 
+  // updates une note
   const updateNotes = async (notesToUpdate) => {
     setNotes(notes.map((notes) => 
     notes.id === notesToUpdate.id ? notesToUpdate : notes));
@@ -58,18 +64,22 @@ function App() {
     <>
     <ThemeProvider theme={darkTheme}>
       <GlobalStyle />
+      
       <Side>
         {isLoading && (
           <Loader/>
         )}
         <GroupeTitleSide>
-          <AddNotes path='/' onClick={createNewNote}><VscAdd /></AddNotes>
+        <TrashNote onClick={() => 
+        {removeNote(id)}}><BsFillTrashFill/></TrashNote>
+        
+          <AddNotes path='/' onClick={createNote}><VscAdd /></AddNotes>
           <TitleList>Liste des notes :</TitleList>
         </GroupeTitleSide>
       {notes ? (
           <NoteList>
             {notes.map((note) => (
-              <li key={note.id}>
+              <li key={note.id} onClick={()=> setId(note.id)}>
                 <LinkToNote id={note.id} title={note.title} />
               </li>
             ))}

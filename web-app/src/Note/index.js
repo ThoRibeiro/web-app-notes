@@ -8,6 +8,7 @@ import { FullHeightAndWidthCentered } from "../App.styled";
 const Note = ({onModif}) => {
   // permet de recupérer l'id
   const {id} = useParams();
+
   const [notes, setNotes] = useState(null);
   const [iconStatus, setIcons] = useState(<VscDebugRestart />)
   const [getStatus, setGetStatus] = useState("IDLE");
@@ -48,7 +49,7 @@ const Note = ({onModif}) => {
       setSaveStatus("ERROR");
     }
   };
-  
+
   if (getStatus === "LOADING") {
     return (
       <FullHeightAndWidthCentered>
