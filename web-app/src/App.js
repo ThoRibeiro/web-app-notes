@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Routes, Route } from "react-router-dom";
 import { VscAdd } from "react-icons/vsc";
-import { BsFillTrashFill, BsFillBrightnessHighFill } from "react-icons/bs";
+import { BsFillTrashFill, BsFillBrightnessHighFill, BsMoonStars } from "react-icons/bs";
 
 import LinkToNote from './LinkToNote';
 import Note from './Note';
 
 import { NoteList } from './NoteList/NoteList.styled';
 import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, 
-  TrashNote, NameProfile, ChangeTheme } from './App.styled';
+  TrashNote, NameProfile, ChangeTheme, NumberListe } from './App.styled';
 
 import { darkTheme, GlobalStyle, lightTheme } from './GlobalStyle';
 import { Loader } from './Note/Note.styled';
@@ -18,17 +18,19 @@ function App() {
 
   //const
   const [id, setId] = useState();
-  const [notes, setNotes] = useState(null);
+  const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState("");
-  const [theme, setTheme] = useState("lightTheme");
+  const [theme, setTheme] = useState("darkTheme");
+  const [numberPage, setNumberPage] = useState(1);
   
   const fetchNotes = async () => {
-    const response = await fetch ("/notes");
-    const notes = await response.json();
+    setNumberPage(numberPage+1);
+    const response = await fetch (`/notes?_page=${numberPage}&_limit=9`);
+    const _note = await response.json();
     setIsLoading(false);
-    setNotes(notes);
-  }
+    setNotes(notes.concat(_note));
+    }
 
   //afficher profile
   const putProfile = async () => {
@@ -52,13 +54,12 @@ function App() {
         setNotes(notes.concat([json]));
       });
   };
-
   //bouton mode light/dark
   const toggleTheme = () => {
-    if (theme === 'lightTheme') {
-      setTheme('darkTheme');
-    } else {
+    if (theme === 'darkTheme') {
       setTheme('lightTheme');
+    } else {
+      setTheme('darkTheme');
     }
   };
   // delete une note
@@ -81,20 +82,20 @@ function App() {
     fetchNotes();
     putProfile(); 
   }, []);
-  
+
   return (
     <>
-    
     <ThemeProvider theme={theme==="lightTheme" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <Side>
-        
-        <ChangeTheme onClick={toggleTheme}><BsFillBrightnessHighFill/></ChangeTheme>
+        {/* Changement de logo theme */}
+        <ChangeTheme onClick={toggleTheme}>{theme==="darkTheme" ? <BsMoonStars/> :  <BsFillBrightnessHighFill/>}</ChangeTheme>
         <NameProfile>Bonjour {profile} !</NameProfile>
         {isLoading && (
           <Loader/>
         )}
         <GroupeTitleSide>
+          {/* Permet de créer une note */}
           <AddNotes path='/' onClick={createNote}><VscAdd /></AddNotes>
           <TitleList>Liste des notes :</TitleList>
         </GroupeTitleSide>
@@ -110,8 +111,11 @@ function App() {
         ? <Loader/>
         : "Aucune note..."
         } 
+        {/* Permet d'afficher plusieurs pages en concat */}
+        <NumberListe onClick={fetchNotes}>Charger Plus</NumberListe>
       </Side>
       <Main>
+        {/* Permet de trash la note */}
         <TrashNote onClick={() => 
           {removeNote(id)}}><BsFillTrashFill/>
         </TrashNote>
