@@ -89,7 +89,8 @@ export const ChangeTheme = styled.button`
   border: none;
   padding: 10px;
   border-radius: 10px;
-  
+  color: ${({ theme }) => theme.colorLogo};;
+  margin: 20px;
 `;
 
 

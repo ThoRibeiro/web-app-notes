@@ -18,9 +18,11 @@ export const darkTheme = {
   mainBackgroundColor : "#2c3338",
   asideBackgroundColor : "#1d2327",
   mainTextColor : "white",
+  colorLogo : "white",
 };
 export const lightTheme = {
   mainBackgroundColor : "#d9b99b",
   asideBackgroundColor : "#AD8E70",
   mainTextColor : "white",
+  colorLogo : "black",
 };

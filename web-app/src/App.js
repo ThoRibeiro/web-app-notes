@@ -8,16 +8,20 @@ import LinkToNote from './LinkToNote';
 import Note from './Note';
 
 import { NoteList } from './NoteList/NoteList.styled';
-import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, TrashNote, NameProfile, ChangeTheme } from './App.styled';
+import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, 
+  TrashNote, NameProfile, ChangeTheme } from './App.styled';
+
 import { darkTheme, GlobalStyle, lightTheme } from './GlobalStyle';
 import { Loader } from './Note/Note.styled';
 
 function App() { 
+
+  //const
   const [id, setId] = useState();
   const [notes, setNotes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState("");
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("lightTheme");
   
   const fetchNotes = async () => {
     const response = await fetch ("/notes");
@@ -77,14 +81,15 @@ function App() {
     fetchNotes();
     putProfile(); 
   }, []);
-
+  
   return (
     <>
     
-    <ThemeProvider theme={theme==="light" ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme==="lightTheme" ? lightTheme : darkTheme}>
       <GlobalStyle />
-      
       <Side>
+        
+        <ChangeTheme onClick={toggleTheme}><BsFillBrightnessHighFill/></ChangeTheme>
         <NameProfile>Bonjour {profile} !</NameProfile>
         {isLoading && (
           <Loader/>
@@ -105,7 +110,6 @@ function App() {
         ? <Loader/>
         : "Aucune note..."
         } 
-        <ChangeTheme onClick={toggleTheme}><BsFillBrightnessHighFill/></ChangeTheme>
       </Side>
       <Main>
         <TrashNote onClick={() => 

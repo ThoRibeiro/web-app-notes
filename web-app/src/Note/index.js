@@ -14,6 +14,13 @@ const Note = ({onModif}) => {
   const [getStatus, setGetStatus] = useState("IDLE");
   const [saveStatus, setSaveStatus] = useState("IDLE");
 
+  //set la date à chaque save
+  const dateSaveNotes =  () => {
+    let dateSave = new Date();
+    dateSave = dateSave.toLocaleString();
+    return dateSave;
+  }
+
   // permet d'afficher les différentes notes 
   const fetchNotes = useCallback (async () => {
     setGetStatus("LOADING");
@@ -52,6 +59,7 @@ const Note = ({onModif}) => {
     }
   };
 
+  //permet de get les status
   if (getStatus === "LOADING") {
     return (
       <FullHeightAndWidthCentered>
@@ -78,15 +86,20 @@ const Note = ({onModif}) => {
         // permet de mettre à jour l'état (Title)
         setNotes({
           ...notes,
-          title : event.target.value
-        })
+          title : event.target.value,
+          date : dateSaveNotes()
+        });
+        saveNote();
       }} />
       <Content value={notes ? notes.content : ""} onChange={(event)=>{
         // permet de mettre à jour l'état du content (textarea)
         setNotes({
           ...notes,
           content : event.target.value,
-        })
+          date : dateSaveNotes()
+        });
+        saveNote();
+        
       }} />
       <SaveStatus>{iconStatus}</SaveStatus>
         <Enregistrer>Enregistrer</Enregistrer>
