@@ -25,8 +25,10 @@ function App() {
   const [numberPage, setNumberPage] = useState(1);
   
   const fetchNotes = async () => {
+    setIsLoading(true);
     setNumberPage(numberPage+1);
     const response = await fetch (`/notes?_page=${numberPage}&_limit=9`);
+    setIsLoading(false);
     const _note = await response.json();
     setIsLoading(false);
     setNotes(notes.concat(_note));

@@ -10,7 +10,7 @@ const Note = ({onModif}) => {
   // permet de recupérer l'id
   const {id} = useParams();
   const [notes, setNotes] = useState(null);
-  const [iconStatus, setIcons] = useState(<VscDebugRestart />)
+  const [iconStatus, setIcons] = useState();
   const [getStatus, setGetStatus] = useState("IDLE");
   const [saveStatus, setSaveStatus] = useState("IDLE");
 
@@ -75,11 +75,13 @@ const Note = ({onModif}) => {
       </FullHeightAndWidthCentered>
     );
   }
+
   const submitForm = (event) => {
     event.preventDefault();
     saveNote();
   }
   return (
+    
     <Form 
       onSubmit={submitForm}>
       <Title type="text" value={notes ? notes.title : ""} onChange={(event)=>{
