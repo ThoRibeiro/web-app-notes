@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { VscAdd } from "react-icons/vsc";
 import { BsFillTrashFill, BsFillBrightnessHighFill, BsMoonStars } from "react-icons/bs";
 
@@ -23,6 +23,7 @@ function App() {
   const [profile, setProfile] = useState("");
   const [theme, setTheme] = useState("darkTheme");
   const [numberPage, setNumberPage] = useState(1);
+  const navigate = useNavigate();
   
   const fetchNotes = async () => {
     setIsLoading(true);
@@ -54,6 +55,7 @@ function App() {
       .then(res => res.json())
       .then(json => {
         setNotes(notes.concat([json]));
+        navigate(`/notes/${json.id}`);
       });
   };
   //bouton mode light/dark
