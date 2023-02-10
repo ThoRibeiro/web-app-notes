@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const SIDE_WIDTH = 300;
 
+// aside de la page
 export const Side = styled.aside`
   display: flex;
   flex-direction: column;
@@ -16,22 +17,39 @@ export const Side = styled.aside`
 
 `;
 
+// le top du side
+export const TopSide = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+`;
 export const GroupeTitleSide = styled.div`
     display: flex;
     flex-direction: row-reverse;
-    padding: 20px;
+    padding: 10px;
 `;
 
-//Title de la liste
-export const TitleList = styled.title`
+//button addNotes
+export const AddNotes = styled.button `
+  margin: auto;
+  border: 0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 20px;
+  color: white;
+  background-color: ${({ theme }) => theme.mainBackgroundColor};
+`;
+
+//name profile ("Bonjour ...")
+export const NameProfile = styled.p`
+  color: ${({ theme }) => theme.mainTextColor};
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 0;
-  width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
-
+  flex: 1;
+  padding: 20px;
+  font-size: 17px;
+  text-decoration: underline;
+  
 `;
 
 //conteneur Main
@@ -39,18 +57,6 @@ export const Main = styled.main`
   color: ${({ theme }) => theme.mainTextColor};
   height: 100vh;
   margin-inline-start: 310px;
-`;
-
-//button addNotes
-export const AddNotes = styled.button `
-  padding: 10px;
-  display: flex;
-  align-items: flex-end;
-  margin: auto;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.mainBackgroundColor};
-  border: 0;
-  color: white;
 `;
 
 export const MessageNoteNotSelect = styled.div `
@@ -71,6 +77,7 @@ export const FullHeightAndWidthCentered = styled.div`
 //logo de loader
 export const LoaderWrapper = styled.div`
   height: 60px;
+  margin: auto;
 `;
 
 //button Trash
@@ -82,15 +89,6 @@ export const TrashNote = styled.button`
   color: white;
   margin: 20px;
   float: right;
-`;
-//name profile ("Bonjour ...")
-export const NameProfile = styled.p`
-  font-size: 17px;
-  text-decoration: underline;
-  color: ${({ theme }) => theme.mainTextColor};
-  display: flex;
-  justify-content: center;
-  padding: 20px;
 `;
 
 //button changement theme

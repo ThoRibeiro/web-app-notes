@@ -8,8 +8,8 @@ import LinkToNote from './LinkToNote';
 import Note from './Note';
 
 import { NoteList } from './NoteList/NoteList.styled';
-import { Side, TitleList, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, 
-  TrashNote, NameProfile, ChangeTheme, NumberListe } from './App.styled';
+import { Side, GroupeTitleSide, Main, AddNotes, MessageNoteNotSelect, 
+  TrashNote, NameProfile, ChangeTheme, NumberListe, TopSide } from './App.styled';
 
 import { darkTheme, GlobalStyle, lightTheme } from './GlobalStyle';
 import { Loader } from './Note/Note.styled';
@@ -88,16 +88,18 @@ function App() {
     <ThemeProvider theme={theme==="lightTheme" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <Side>
-        {/* Changement de logo theme */}
+        {/* Changement de logo the */}
         <ChangeTheme onClick={toggleTheme}>{theme==="darkTheme" ? <BsMoonStars/> :  <BsFillBrightnessHighFill/>}</ChangeTheme>
-        <NameProfile>Bonjour {profile} !</NameProfile>
+        <TopSide>
+          <AddNotes path='/' onClick={createNote}><VscAdd /></AddNotes>
+          <NameProfile>Bonjour {profile} !</NameProfile>
+        </TopSide>
         {isLoading && (
           <Loader/>
         )}
         <GroupeTitleSide>
           {/* Permet de créer une note */}
-          <AddNotes path='/' onClick={createNote}><VscAdd /></AddNotes>
-          <TitleList>Liste des notes :</TitleList>
+          
         </GroupeTitleSide>
       {notes ? (
           <NoteList>

@@ -59,6 +59,12 @@ export const SaveStatus = styled.div`
 `;
 
 export const Loader = styled(VscDebugRestart)`
+  width: 10%;
+  height: 100%;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
   -webkit-animation: icon-spin 2s infinite linear;
   animation: icon-spin 2s infinite linear;
   @-webkit-keyframes icon-spin {
@@ -67,8 +73,8 @@ export const Loader = styled(VscDebugRestart)`
       transform: rotate(0deg);
     }
     100% {
-      -webkit-transform: rotate(359deg);
-      transform: rotate(359deg);
+      -webkit-transform: rotate(-359deg);
+      transform: rotate(-359deg);
     }
   }
   @keyframes icon-spin {
@@ -77,8 +83,8 @@ export const Loader = styled(VscDebugRestart)`
       transform: rotate(0deg);
     }
     100% {
-      -webkit-transform: rotate(359deg);
-      transform: rotate(359deg);
+      -webkit-transform: rotate(-359deg);
+      transform: rotate(-359deg);
     }
   }
 `;
